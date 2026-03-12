@@ -1,50 +1,43 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
-class Rectangle {
-	double ld[2];
-	double ru[2];
-public:
-	Rectangle(double, double, double, double);
-	Rectangle(const Rectangle & a);
-	~Rectangle();
-	void Print() const;
-	void Set(double, double, double, double);
-	void Area() const;
-};
-
-Rectangle::Rectangle(double ld1 =1 , double ld2=2, double ru1=0, double ru2=1) {
-	ld[0] = ld1; ld[1] = ld2; ru[0] = ru1; ru[1] = ru2;
-	cout << "构造函数调用" << endl;
-}
-Rectangle::Rectangle(const Rectangle& a) {
-	ld[0] = a.ld[0]; ld[1] = a.ld[1]; ru[0] = a.ru[0]; ru[1] = a.ru[1];
-	cout << "构造函数调用" << endl;
-}
-Rectangle::~Rectangle() {
-	cout << "析构函数调用" << endl;
-}
-void Rectangle::Print() const {
-	cout << ld[0] << "----" << ld[1] << "----" << ru[0] << "----" << ru[1] << endl;
-}
-void Rectangle::Set(double ld1, double ld2, double ru1, double ru2) {
-	ld[0] = ld1; ld[1] = ld2; ru[0] = ru1; ru[1] = ru2;
-}
-void Rectangle::Area() const {
-	double size = (ld[1] - ld[0]) * (ru[1] - ru[0]);
-	size = size > 0 ? size : -size;
-	cout << size << endl;;
-}
 int main() {
-	Rectangle rc1(1.0, 2.0, 3.0, 4.0);
-	Rectangle rc2(rc1);
-	rc1.Print(); 
-	rc1.Area();
-	rc1.Set(5, 1, 9, 0);
-	rc1.Print();
-	rc1.Area();
-	rc2.Print();
-	rc2.Area();
-	rc2.Set(5, 1, 0, 9);
-	rc2.Print();
-	rc2.Area();
+	int (*a) = new int[100];
+	int (*b)[25] = new int[20][25];
+	int (*c)[8][5] = new int[9][8][5];
+	int i,j,k;
+	int sum1 = 0, sum2 = 0, sum3 = 0, sum4 = 0;
+	for (i = 0; i < 100; i++) { a[i] = i; sum1 += a[i]; }
+	for (i = 0; i < 20; i++) {
+		for (j = 0; j < 25; j++) {
+			b[i][j] = i * 25 + j;
+			sum2 += b[i][j];
+		}
+	}
+	for (i = 0; i < 9; i++) {
+		for (j = 0; j < 8; j++) {
+			for (k = 0; k < 5; k++) {
+				c[i][j][k] = i * 100 + j * 10 + k;
+				sum3 += c[i][j][k];
+			}
+		}
+	}
+	int m, n;
+	cout << "Enter m n"<<endl ;
+	cin >> m >> n;
+	int** d = new int* [m];
+	for (i = 0; i < m; i++) {
+		d[i] = new int[n];
+	}
+	for (i = 0; i < m; i++) {
+		for (j = 0; j < n; j++) {
+			d[i][j] = i * n + j;
+			sum4 += d[i][j];
+		}
+	}
+	cout << sum1 << "," << sum2 << "," << sum3 << "," << sum4 << "," << endl;
+	delete[]a;
+	delete[]b;
+	delete[]c;
+	for (i = 0; i < m; i++) delete[]d[i];
+	delete[]d;
 }
